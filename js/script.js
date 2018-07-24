@@ -11,67 +11,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function generateTemplate(name, data, basicElement) {
-      var template = document.getElementById(name).innerHTML;
-      var element = document.createElement(basicElement || 'div');
+        var template = document.getElementById(name).innerHTML;
+        var element = document.createElement(basicElement || 'div');
 
-      Mustache.parse(template);
-      element.innerHTML = Mustache.render(template, data);
+        Mustache.parse(template);
+        element.innerHTML = Mustache.render(template, data);
 
-      return element;
+        return element;
     }
 
     function Column(name) {
-      var self = this;
+        var self = this;
 
-      this.id = randomString();
-      this.name = name;
-      this.element = generateTemplate('column-template', { id: this.id, name: this.name });
-      this.element.querySelector('.column').addEventListener('click', function (event) {
-        if (event.target.classList.contains('btn-delete')) {
-          self.removeColumn();
-        }
+        this.id = randomString();
+        this.name = name;
+        this.element = generateTemplate('column-template', {
+            id: this.id,
+            name: this.name
+        });
+        this.element.querySelector('.column').addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-delete')) {
+                self.removeColumn();
+            }
 
-        if (event.target.classList.contains('add-card')) {
-          self.addCard(new Card(prompt("Enter the name of the card")));
-        }
-      });
+            if (event.target.classList.contains('add-card')) {
+                var cardDesc = prompt("Enter the name of the card");
+                if (cardDesc === null) cardDesc = 'noname card';
+                self.addCard(new Card(cardDesc));
+            }
+        });
     }
 
     Column.prototype = {
         addCard: function(card) {
-          this.element.querySelector('ul').appendChild(card.element);
+            this.element.querySelector('ul').appendChild(card.element);
         },
         removeColumn: function() {
-          this.element.parentNode.removeChild(this.element);
+            this.element.parentNode.removeChild(this.element);
         }
     };
 
     function Card(description) {
-      var self = this;
+        var self = this;
 
-      this.id = randomString();
-      this.description = description;
-      this.element = generateTemplate('card-template', { description: this.description }, 'li');
-      this.element.querySelector('.card').addEventListener('click', function (event) {
-        event.stopPropagation();
+        this.id = randomString();
+        this.description = description;
+        this.element = generateTemplate('card-template', {
+            description: this.description
+        }, 'li');
+        this.element.querySelector('.card').addEventListener('click', function(event) {
+            event.stopPropagation();
 
-        if (event.target.classList.contains('btn-delete')) {
-          self.removeCard();
-        }
-      });
+            if (event.target.classList.contains('btn-delete')) {
+                self.removeCard();
+            }
+        });
     }
 
     Card.prototype = {
-    	removeCard: function() {
-    		this.element.parentNode.removeChild(this.element);
+        removeCard: function() {
+            this.element.parentNode.removeChild(this.element);
         }
     }
 
     var board = {
         name: 'Kanban Board',
         addColumn: function(column) {
-          this.element.appendChild(column.element);
-          initSortable(column.id); //About this feature we will tell later
+            this.element.appendChild(column.element);
+            initSortable(column.id); //About this feature we will tell later
         },
         element: document.querySelector('#board .column-container')
 
@@ -80,15 +87,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function initSortable(id) {
-      var el = document.getElementById(id);
-      var sortable = Sortable.create(el, {
-        group: 'kanban',
-        sort: true
-      });
+        var el = document.getElementById(id);
+        var sortable = Sortable.create(el, {
+            group: 'kanban',
+            sort: true
+        });
     }
 
     document.querySelector('#board .create-column').addEventListener('click', function() {
         var name = prompt('Enter a column name');
+        console.log(name);
+        if (name === null) name = 'noname column';
         var column = new Column(name);
         board.addColumn(column);
     });
@@ -106,9 +115,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // CREATING CARDS
     var card1 = new Card('New task');
     var card2 = new Card('Create kanban boards');
+    var card3 = new Card('Make some styling');
 
     // ADDING CARDS TO COLUMNS
     todoColumn.addCard(card1);
     doingColumn.addCard(card2);
+    doneColumn.addCard(card3);
 });
-

@@ -3,34 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>Kanban board</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div id="board" class="board">
       <h1>Kanban board</h1>
-      <button class="create-column">Add a column</button>
-      <div class="column-container"></div>
+      <button class="create-column btn-xs">Add a column</button>
+      <div class="row" >
+        <div class="container">
+          <div class="column-container"></div>
+        </div>
+      </div>
     </div>
 
     <script id="column-template" type="x-tmpl-mustache">
+      <div class="column-style col-md-4">
         <div class="column">
-            <h2 class="column-title">{{ name }}</h2>
-            <ul id={{ id }} class="column-card-list"></ul>
-            <button class="btn-delete">X</button>
-            <button class="add-card">Add a card</button>
+          <h2 class="column-title">{{ name }}</h2>
+          <button class="btn-delete btn-xs">X</button>
+          <button class="add-card btn-xs">Add a card</button>
+          <ul id={{ id }} class="column-card-list"></ul>
         </div>
-    </script>
-
-
-    <script id="card-template" type="x-tmpl-mustache">
-      <div class="card">
-        <p class="card-description">{{ description }}</p>
-        <button class="btn-delete">x</button>
       </div>
-    </script>
+  </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
-    <script src="js/script.js"></script>
-  </body>
+  <script id="card-template" type="x-tmpl-mustache">
+    <div class="card">
+      <p class="card-description">{{ description }}</p>
+      <button class="btn-delete btn-xs">x</button>
+    </div>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
 </html>

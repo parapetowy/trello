@@ -1,15 +1,39 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0 auto;
-}
-
 .board {
   padding: 10px;
-  background-image: url("https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");
-  margin: 0 auto;
-  color: white;
+  background: url("https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");
+  background-size: cover;
+  color: #8AA675;
+  height: 100vh;
+}
+
+.board button {
+  color: black;
+}
+
+.column {
+  background: rgba(156, 122, 94, 0.4);
+  color: #FFF2E7;
+  border: 3px solid #DAE6D0;
+  padding: 10px;
+  margin: 10px;
+}
+
+.column button {
+  color: black;
+}
+
+.card {
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 20px;
+}
+
+.card p {
+  margin-right: 10px;
+}
+
+.card button {
+  float: right;
+  color: black;
 }
 /*# sourceMappingURL=style.css.map */
