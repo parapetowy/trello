@@ -1,5 +1,4 @@
 'use strict';
-
 document.addEventListener('DOMContentLoaded', function() {
     function randomString() {
         var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
@@ -9,20 +8,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return str;
     }
-
     function generateTemplate(name, data, basicElement) {
         var template = document.getElementById(name).innerHTML;
         var element = document.createElement(basicElement || 'div');
-
         Mustache.parse(template);
         element.innerHTML = Mustache.render(template, data);
-
         return element;
     }
-
     function Column(name) {
         var self = this;
-
         this.id = randomString();
         this.name = name;
         this.element = generateTemplate('column-template', {
@@ -33,15 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (event.target.classList.contains('btn-delete')) {
                 self.removeColumn();
             }
-
             if (event.target.classList.contains('add-card')) {
                 var cardDesc = prompt("Enter the name of the card");
-                if (cardDesc === null) cardDesc = 'noname card';
-                self.addCard(new Card(cardDesc));
+                if (cardDesc === '') {
+                    cardDesc = 'noname card';
+                    self.addCard(new Card(cardDesc));
+                } else alert('Enter the name');
             }
         });
     }
-
     Column.prototype = {
         addCard: function(card) {
             this.element.querySelector('ul').appendChild(card.element);
@@ -50,10 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.element.parentNode.removeChild(this.element);
         }
     };
-
     function Card(description) {
         var self = this;
-
         this.id = randomString();
         this.description = description;
         this.element = generateTemplate('card-template', {
@@ -61,19 +53,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 'li');
         this.element.querySelector('.card').addEventListener('click', function(event) {
             event.stopPropagation();
-
             if (event.target.classList.contains('btn-delete')) {
                 self.removeCard();
             }
         });
     }
-
     Card.prototype = {
         removeCard: function() {
             this.element.parentNode.removeChild(this.element);
         }
     }
-
     var board = {
         name: 'Kanban Board',
         addColumn: function(column) {
@@ -81,11 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             initSortable(column.id); //About this feature we will tell later
         },
         element: document.querySelector('#board .column-container')
-
     };
-
-
-
     function initSortable(id) {
         var el = document.getElementById(id);
         var sortable = Sortable.create(el, {
@@ -93,30 +78,27 @@ document.addEventListener('DOMContentLoaded', function() {
             sort: true
         });
     }
-
     document.querySelector('#board .create-column').addEventListener('click', function() {
         var name = prompt('Enter a column name');
         console.log(name);
-        if (name === null) name = 'noname column';
-        var column = new Column(name);
-        board.addColumn(column);
+        if (name === '') {
+            name = 'noname column';
+            var column = new Column(name);
+            board.addColumn(column);
+        } else alert('Enter the name')
     });
-
     // CREATING COLUMNS
     var todoColumn = new Column('To do');
     var doingColumn = new Column('Doing');
     var doneColumn = new Column('Done');
-
     // ADDING COLUMNS TO THE BOARD
     board.addColumn(todoColumn);
     board.addColumn(doingColumn);
     board.addColumn(doneColumn);
-
     // CREATING CARDS
     var card1 = new Card('New task');
     var card2 = new Card('Create kanban boards');
     var card3 = new Card('Make some styling');
-
     // ADDING CARDS TO COLUMNS
     todoColumn.addCard(card1);
     doingColumn.addCard(card2);
