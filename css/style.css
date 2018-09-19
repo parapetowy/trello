@@ -1,3 +1,9 @@
+body {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: rgb(156, 122, 94);
+}
+
 .board {
   padding: 10px;
   background: url("https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");

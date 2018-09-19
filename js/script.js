@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cardDesc === '') {
                     cardDesc = 'noname card';
                     self.addCard(new Card(cardDesc));
-                } else alert('Enter the name');
+                } else alert('Card not created!');
             }
         });
     }
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
             name = 'noname column';
             var column = new Column(name);
             board.addColumn(column);
-        } else alert('Enter the name')
+        } else alert('Column not created!')
     });
     // CREATING COLUMNS
     var todoColumn = new Column('To do');
