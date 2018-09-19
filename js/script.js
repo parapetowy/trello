@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return str;
     }
+
     function generateTemplate(name, data, basicElement) {
         var template = document.getElementById(name).innerHTML;
         var element = document.createElement(basicElement || 'div');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         element.innerHTML = Mustache.render(template, data);
         return element;
     }
+
     function Column(name) {
         var self = this;
         this.id = randomString();
@@ -32,7 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (cardDesc === '') {
                     cardDesc = 'noname card';
                     self.addCard(new Card(cardDesc));
-                } else alert('Card not created!');
+                } else if (cardDesc === null) {
+                    alert('Card not created!')
+                } else self.addCard(new Card(cardDesc));
+
             }
         });
     }
@@ -44,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.element.parentNode.removeChild(this.element);
         }
     };
+
     function Card(description) {
         var self = this;
         this.id = randomString();
@@ -71,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         element: document.querySelector('#board .column-container')
     };
+
     function initSortable(id) {
         var el = document.getElementById(id);
         var sortable = Sortable.create(el, {
@@ -85,7 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
             name = 'noname column';
             var column = new Column(name);
             board.addColumn(column);
-        } else alert('Column not created!')
+        } else if (name === null) {
+            alert('Column not created!')
+        } else {
+            var column = new Column(name);
+            board.addColumn(column);
+        }
     });
     // CREATING COLUMNS
     var todoColumn = new Column('To do');
